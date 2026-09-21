@@ -2,56 +2,854 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>he's back…</title>
-<meta http-equiv="refresh" content="4; url=http://185.237.13.160:3045/">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#02050b"/>
+<title>GODZILLA — Connect</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦖%3C/text%3E%3C/svg%3E"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Exo+2:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#030710; --cyan:#00f5c4; --cy2:#00b8ff; --text:#d8eeff; --sub:#4d7090; --bdr:#12213a;
+  --bg:#02050b;
+  --bdr:#0f2238;
+  --bdr2:#173556;
+  --atom:#3df2ff;
+  --atom2:#1ea0ff;
+  --atom3:#2a5bff;
+  --ember:#ff6a1a;
+  --ember2:#ffb020;
+  --text:#dff4ff;
+  --sub:#5f86a6;
+  --dim:#0d1c2e;
+  --err:#ff3d4f;
+  --warn:#ff9a1a;
+  --glass:rgba(4,10,19,.80);
+  --disp:'Oswald','Impact',sans-serif;
+  --body:'Exo 2','Segoe UI',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
-.wrap{max-width:420px;width:100%}
-.wave{font-size:2.6rem;display:block;margin-bottom:14px;animation:wave 2.5s ease-in-out infinite}
-@keyframes wave{0%,100%{transform:rotate(0deg)}20%{transform:rotate(-14deg)}40%{transform:rotate(14deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(8deg)}}
-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:1px;margin-bottom:8px;background:linear-gradient(120deg,var(--cyan),var(--cy2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-p{color:var(--sub);font-size:.85rem;line-height:1.6;margin-bottom:20px}
-.dots{display:flex;gap:6px;justify-content:center;margin-bottom:24px}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:d 1.1s ease-in-out infinite;box-shadow:0 0 6px rgba(0,245,196,.5)}
-.dot:nth-child(2){animation-delay:.18s}
-.dot:nth-child(3){animation-delay:.36s}
-@keyframes d{0%,80%,100%{transform:scale(.65);opacity:.3}40%{transform:scale(1.25);opacity:1}}
-a.manual{color:var(--cyan);text-decoration:none;font-size:.75rem;border-bottom:1px solid rgba(0,245,196,.3)}
-.divider{height:1px;background:var(--bdr);margin:26px 0}
-.community{
-  display:inline-flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,rgba(37,211,102,.12),rgba(37,211,102,.04));
-  border:1px solid rgba(37,211,102,.35);border-radius:14px;
-  padding:13px 22px;text-decoration:none;color:#25d366;font-weight:700;font-size:.85rem;
-  transition:transform .2s,border-color .2s,background .2s;
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--body);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit}
+
+/* ═══ BACKGROUND STACK ═══ */
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* fish-scale hide texture */
+.scales{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
+  background-image:
+    radial-gradient(circle at 50% 100%,transparent 60%,rgba(61,242,255,.07) 61%,transparent 64%),
+    radial-gradient(circle at 0% 100%,transparent 60%,rgba(61,242,255,.07) 61%,transparent 64%),
+    radial-gradient(circle at 100% 100%,transparent 60%,rgba(61,242,255,.07) 61%,transparent 64%);
+  background-size:34px 20px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,#000 15%,transparent 78%);
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,#000 15%,transparent 78%);
+  animation:scaleDrift 30s linear infinite;
 }
-.community:hover{transform:translateY(-2px);border-color:rgba(37,211,102,.6);background:rgba(37,211,102,.18)}
-.community svg{flex-shrink:0}
-.sub{font-size:.68rem;color:var(--sub);margin-top:10px}
+@keyframes scaleDrift{to{background-position:34px 20px}}
+
+.atmo{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px)}
+.orb1{width:720px;height:520px;bottom:-260px;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(30,160,255,.30),transparent 70%);animation:breathe 6s ease-in-out infinite}
+.orb2{width:380px;height:380px;top:-120px;right:-100px;background:radial-gradient(ellipse,rgba(255,106,26,.13),transparent 70%);animation:breathe 9s ease-in-out infinite 1s}
+.orb3{width:320px;height:320px;top:30%;left:-120px;background:radial-gradient(ellipse,rgba(42,91,255,.16),transparent 70%);animation:breathe 11s ease-in-out infinite 2s}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.72) 100%)}
+
+/* lightning flash */
+.flash{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 20%,rgba(200,240,255,.55),rgba(61,242,255,.12) 55%,transparent 80%)}
+.flash.go{animation:flash .9s ease-out}
+@keyframes flash{0%{opacity:0}6%{opacity:.85}12%{opacity:.05}20%{opacity:.6}100%{opacity:0}}
+
+/* dorsal ridge (charges left → right like atomic breath) */
+.ridge{position:fixed;left:0;bottom:0;width:100%;height:min(24vh,170px);z-index:0;pointer-events:none;filter:drop-shadow(0 0 10px rgba(61,242,255,.32))}
+.ridge polygon{fill:#050f1b;stroke:rgba(61,242,255,.10);stroke-width:1;animation:charge 7s ease-in-out infinite}
+.ridge .back polygon{fill:#040b15;opacity:.7}
+@keyframes charge{
+  0%,22%,100%{fill:#050f1b;stroke:rgba(61,242,255,.10)}
+  8%{fill:#0f5f92;stroke:rgba(140,250,255,.9)}
+  15%{fill:#0a3556;stroke:rgba(61,242,255,.4)}
+}
+
+/* ═══ SCREENS ═══ */
+.screen{
+  position:fixed;inset:0;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:calc(24px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));
+  opacity:0;pointer-events:none;
+  transition:opacity .42s cubic-bezier(.4,0,.2,1),transform .42s cubic-bezier(.4,0,.2,1),filter .42s;
+  transform:translateY(22px) scale(.985);filter:blur(6px);
+  overflow-y:auto;
+}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0) scale(1);filter:blur(0)}
+.screen.exit{opacity:0;transform:translateY(-16px) scale(.988);filter:blur(4px);transition:opacity .28s,transform .28s,filter .28s}
+
+/* ═══ PROGRESS — dorsal spines charging ═══ */
+.progress{width:100%;max-width:420px;margin-bottom:22px}
+.progress-label{font-size:.6rem;letter-spacing:3.5px;color:var(--sub);margin-bottom:9px;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.progress-label::before{content:'';display:block;width:6px;height:6px;background:var(--atom);transform:rotate(45deg);box-shadow:0 0 10px rgba(61,242,255,.9);flex-shrink:0}
+.spines{display:flex;align-items:flex-end;gap:3px;height:22px;filter:drop-shadow(0 0 5px rgba(61,242,255,.4))}
+.spines i{flex:1;height:var(--h,12px);background:#0a1729;clip-path:polygon(50% 0,100% 100%,0 100%);transition:background .25s}
+.spines i.on{background:linear-gradient(0deg,var(--atom3),var(--atom) 70%,#fff)}
+
+/* ═══ LOGO ═══ */
+.logo{display:flex;flex-direction:column;align-items:center;margin-bottom:22px;position:relative}
+.logo-ring{position:absolute;top:0;left:50%;width:84px;height:84px;margin-left:-42px;border-radius:50%;border:1px solid rgba(61,242,255,.2);animation:ringA 4s ease-in-out infinite;pointer-events:none}
+.logo-ring::before{content:'';position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(61,242,255,.14);animation:spin 26s linear infinite}
+@keyframes ringA{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gz-icon{width:84px;height:84px;display:block;position:relative;z-index:1;animation:atomPulse 3.2s ease-in-out infinite}
+@keyframes atomPulse{
+  0%,100%{filter:drop-shadow(0 0 10px rgba(61,242,255,.45)) drop-shadow(0 0 30px rgba(30,160,255,.2))}
+  50%{filter:drop-shadow(0 0 22px rgba(61,242,255,.95)) drop-shadow(0 0 60px rgba(30,160,255,.45))}
+}
+.wordmark{position:relative;display:inline-block;margin-top:10px;font-family:var(--disp);font-weight:700;font-size:clamp(2.1rem,10.5vw,3.1rem);letter-spacing:.2em;padding-left:.2em;line-height:1;text-transform:uppercase}
+.wm-main{display:block;background:linear-gradient(180deg,#fff 0%,var(--atom) 35%,var(--atom2) 68%,var(--atom3) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 16px rgba(61,242,255,.4))}
+.wordmark::before,.wordmark::after{content:attr(data-text);position:absolute;left:0;top:0;padding-left:.2em;opacity:0;mix-blend-mode:screen;pointer-events:none}
+.wordmark::before{color:var(--ember);animation:gl1 6s infinite}
+.wordmark::after{color:#00e5ff;animation:gl2 6s infinite .07s}
+@keyframes gl1{0%,86%,100%{opacity:0;transform:translate(0)}87%{opacity:.9;transform:translate(-4px,1px);clip-path:inset(8% 0 62% 0)}90%{opacity:.9;transform:translate(3px,-1px);clip-path:inset(58% 0 10% 0)}93%{opacity:0}}
+@keyframes gl2{0%,86%,100%{opacity:0;transform:translate(0)}88%{opacity:.9;transform:translate(4px,-1px);clip-path:inset(40% 0 30% 0)}91%{opacity:.9;transform:translate(-3px,1px);clip-path:inset(5% 0 70% 0)}94%{opacity:0}}
+.logo-jp{font-size:.7rem;letter-spacing:.9em;padding-left:.9em;color:var(--ember);margin-top:9px;font-weight:700;text-shadow:0 0 14px rgba(255,106,26,.55)}
+.logo-tag{font-size:.58rem;letter-spacing:4.5px;color:var(--sub);margin-top:8px;text-transform:uppercase}
+
+/* ═══ CARD (HUD brackets) ═══ */
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--bdr);border-radius:8px;padding:26px 22px;
+  position:relative;width:100%;max-width:420px;
+  box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 40px rgba(30,160,255,.06),inset 0 1px 0 rgba(61,242,255,.08);
+}
+.card::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--atom),var(--ember),transparent);opacity:.75}
+.card::after{
+  content:'';position:absolute;inset:-1px;pointer-events:none;border-radius:8px;
+  background:
+    linear-gradient(var(--atom),var(--atom)) top left/16px 2px no-repeat,
+    linear-gradient(var(--atom),var(--atom)) top left/2px 16px no-repeat,
+    linear-gradient(var(--atom),var(--atom)) top right/16px 2px no-repeat,
+    linear-gradient(var(--atom),var(--atom)) top right/2px 16px no-repeat,
+    linear-gradient(var(--ember),var(--ember)) bottom left/16px 2px no-repeat,
+    linear-gradient(var(--ember),var(--ember)) bottom left/2px 16px no-repeat,
+    linear-gradient(var(--ember),var(--ember)) bottom right/16px 2px no-repeat,
+    linear-gradient(var(--ember),var(--ember)) bottom right/2px 16px no-repeat;
+  filter:drop-shadow(0 0 4px rgba(61,242,255,.5));
+}
+.card.shake{animation:quake .55s cubic-bezier(.36,.07,.19,.97)}
+@keyframes quake{10%,90%{transform:translate(-2px,1px)}20%,80%{transform:translate(4px,-2px)}30%,50%,70%{transform:translate(-6px,3px)}40%,60%{transform:translate(6px,-3px)}}
+
+/* ═══ SCREEN 1 ═══ */
+.screen-title{font-family:var(--disp);font-size:clamp(1rem,3.6vw,1.25rem);font-weight:600;letter-spacing:5px;text-align:center;margin-bottom:5px;color:var(--text)}
+.screen-sub{font-size:.72rem;color:var(--sub);text-align:center;margin-bottom:20px;letter-spacing:.4px}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lang-btn{
+  background:linear-gradient(145deg,rgba(5,10,18,.95),rgba(8,15,27,.95));
+  border:1px solid var(--bdr);border-radius:6px;color:inherit;
+  padding:20px 12px;cursor:pointer;text-align:center;
+  transition:border-color .3s,transform .28s,box-shadow .3s,opacity .38s;
+  position:relative;overflow:hidden;
+  opacity:0;transform:translateY(14px);
+}
+.lang-btn.visible{opacity:1;transform:translateY(0)}
+.lang-btn::before{content:'';position:absolute;top:-60%;left:-30%;width:40%;height:220%;background:linear-gradient(90deg,transparent,rgba(61,242,255,.14),transparent);transform:rotate(18deg) translateX(-200%);transition:transform .6s}
+.lang-btn:hover::before,.lang-btn:focus-visible::before{transform:rotate(18deg) translateX(700%)}
+.lang-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ember),var(--atom));transform:scaleX(0);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.lang-btn:hover,.lang-btn:focus-visible{outline:none;border-color:rgba(61,242,255,.6);transform:translateY(-5px)!important;box-shadow:0 16px 38px rgba(30,160,255,.2),0 0 0 1px rgba(61,242,255,.14)}
+.lang-btn:hover::after,.lang-btn:focus-visible::after{transform:scaleX(1)}
+.lang-btn:active{transform:translateY(-2px) scale(.98)!important}
+.lang-flag{font-size:2.2rem;display:block;margin-bottom:10px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));transition:transform .3s}
+.lang-btn:hover .lang-flag{transform:scale(1.14) translateY(-3px)}
+.lang-name{font-family:var(--disp);font-size:.8rem;font-weight:600;letter-spacing:2.5px;color:var(--atom);display:block;margin-bottom:3px}
+.lang-native{font-size:.63rem;color:var(--sub);letter-spacing:.3px}
+
+/* ═══ SCREEN 2 ═══ */
+.welcome-head{text-align:center;margin-bottom:6px}
+.welcome-icon{font-size:3.2rem;display:block;margin-bottom:12px;filter:drop-shadow(0 0 18px rgba(61,242,255,.55));animation:roar 4.5s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes roar{0%,72%,100%{transform:scale(1) rotate(0)}76%{transform:scale(1.28) rotate(-6deg)}80%{transform:scale(1.22) rotate(6deg)}84%{transform:scale(1.28) rotate(-4deg)}90%{transform:scale(1.05) rotate(0)}}
+.welcome-title{font-family:var(--disp);font-size:1.6rem;font-weight:700;letter-spacing:5px;color:var(--atom);margin-bottom:12px;text-shadow:0 0 30px rgba(61,242,255,.5)}
+.welcome-body{font-size:.84rem;color:var(--sub);line-height:1.9}
+.welcome-body strong{color:var(--ember);font-weight:700;letter-spacing:1px;text-shadow:0 0 14px rgba(255,106,26,.4)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.pill{background:linear-gradient(135deg,rgba(61,242,255,.08),rgba(255,106,26,.05));border:1px solid rgba(61,242,255,.25);border-radius:4px;padding:6px 14px;font-size:.66rem;color:var(--atom);font-weight:700;letter-spacing:.8px;transition:border-color .2s,background .2s,transform .2s}
+.pill:hover{border-color:rgba(61,242,255,.6);background:rgba(61,242,255,.14);transform:translateY(-2px)}
+
+/* ═══ SCREEN 3 ═══ */
+.pair-logo-row{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:6px}
+.pair-logo-row .gz-icon{width:38px;height:38px}
+.pair-logo-row .wordmark{font-size:1.5rem;margin-top:0}
+.pair-logo-row .wordmark::before,.pair-logo-row .wordmark::after{display:none}
+
+.steps{display:flex;flex-direction:column;margin-bottom:22px}
+.step{display:flex;gap:14px;align-items:flex-start;padding-bottom:16px;position:relative}
+.step:last-child{padding-bottom:0}
+.step-track{flex-shrink:0;position:relative;display:flex;flex-direction:column;align-items:center}
+.step:not(:last-child) .step-track::after{content:'';position:absolute;top:32px;width:1px;height:calc(100% - 10px);background:linear-gradient(180deg,rgba(61,242,255,.45),rgba(255,106,26,.15),transparent)}
+.step-num{width:30px;height:30px;clip-path:polygon(25% 4%,75% 4%,100% 50%,75% 96%,25% 96%,0 50%);background:linear-gradient(135deg,var(--atom),var(--atom3));color:#001018;font-weight:800;font-size:.75rem;display:grid;place-items:center;font-family:var(--disp);flex-shrink:0}
+.step-title{font-weight:700;font-size:.86rem;margin-top:4px;margin-bottom:3px;color:var(--text)}
+.step-desc{font-size:.72rem;color:var(--sub);line-height:1.65}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--bdr2),var(--ember),var(--bdr2),transparent);margin-bottom:20px;opacity:.8}
+
+.field-label{font-size:.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--sub);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.field-label::before{content:'';display:block;width:16px;height:1px;background:linear-gradient(90deg,var(--ember),transparent)}
+
+.input-row{display:flex;gap:10px;position:relative;align-items:stretch}
+.flag-badge{position:absolute;left:13px;top:50%;font-size:1.1rem;pointer-events:none;z-index:1;opacity:0;transition:opacity .2s,transform .25s;transform:translateY(-50%) scale(.7)}
+.flag-badge.visible{opacity:1;transform:translateY(-50%) scale(1)}
+.phone-input{
+  flex:1;min-width:0;background:linear-gradient(145deg,#03070e,#050b15);
+  border:1px solid var(--bdr2);border-radius:6px;
+  padding:14px 16px;color:var(--text);
+  font-family:var(--body);font-size:1rem;
+  outline:none;transition:border-color .25s,box-shadow .25s,padding-left .2s;letter-spacing:.6px;
+}
+.phone-input.has-flag{padding-left:40px}
+.phone-input::placeholder{color:var(--dim)}
+.phone-input:focus{border-color:rgba(61,242,255,.7);box-shadow:0 0 0 3px rgba(61,242,255,.08),0 0 26px rgba(61,242,255,.1)}
+
+.pair-btn{
+  padding:14px 20px;border-radius:6px;border:none;
+  background:linear-gradient(135deg,var(--ember) 0%,var(--ember2) 100%);
+  color:#180800;font-family:var(--disp);font-size:.86rem;font-weight:700;
+  letter-spacing:2px;cursor:pointer;white-space:nowrap;
+  box-shadow:0 4px 22px rgba(255,106,26,.35);
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.pair-btn::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:sheen 3s ease-in-out infinite}
+@keyframes sheen{0%,100%{left:-100%}50%{left:150%}}
+.pair-btn:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,106,26,.5)}
+.pair-btn:active{transform:translateY(0)}
+.pair-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none}
+.hint{margin-top:9px;font-size:.67rem;color:var(--sub);line-height:1.7;letter-spacing:.15px}
+
+.status{display:none;align-items:center;gap:10px;margin-top:12px;padding:11px 15px;border-radius:6px;font-size:.78rem}
+.status.show{display:flex}
+.status.loading{background:rgba(61,242,255,.05);border:1px solid rgba(61,242,255,.2);color:var(--atom)}
+.status.error{background:rgba(255,61,79,.06);border:1px solid rgba(255,61,79,.3);color:var(--err)}
+.dots-loader{display:flex;gap:5px;align-items:center}
+.dot-p{width:7px;height:7px;background:var(--atom);transform:rotate(45deg);animation:dotB 1.1s ease-in-out infinite;box-shadow:0 0 8px rgba(61,242,255,.7)}
+.dot-p:nth-child(2){animation-delay:.18s}
+.dot-p:nth-child(3){animation-delay:.36s}
+@keyframes dotB{0%,80%,100%{transform:rotate(45deg) scale(.6);opacity:.3}40%{transform:rotate(45deg) scale(1.3);opacity:1}}
+
+/* ─── PIN box ─── */
+.code-box{
+  display:none;
+  background:linear-gradient(145deg,rgba(2,6,13,.97),rgba(4,10,20,.97));
+  border:1px solid rgba(61,242,255,.4);border-radius:8px;padding:22px 16px;text-align:center;
+  margin-top:16px;
+  box-shadow:0 0 60px rgba(30,160,255,.16),inset 0 0 40px rgba(61,242,255,.04);
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1);
+}
+.code-box.show{display:block}
+@keyframes popIn{from{opacity:0;transform:scale(.88) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.code-label{font-size:.6rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--sub);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+.code-label::before,.code-label::after{content:'';flex:1;height:1px}
+.code-label::before{background:linear-gradient(90deg,transparent,var(--ember))}
+.code-label::after{background:linear-gradient(90deg,var(--ember),transparent)}
+.pin-cells{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:18px;min-height:60px}
+.pin-cell{
+  width:40px;height:52px;
+  background:linear-gradient(145deg,rgba(61,242,255,.05),rgba(42,91,255,.03));
+  border:1px solid rgba(61,242,255,.2);border-radius:6px;
+  display:grid;place-items:center;
+  font-family:var(--disp);font-size:1.6rem;font-weight:700;color:var(--atom);
+  text-shadow:0 0 18px rgba(61,242,255,.7);
+  opacity:0;transform:scale(.7) translateY(8px);
+  transition:border-color .2s,box-shadow .2s;
+}
+.pin-cell.filled{opacity:1;transform:scale(1) translateY(0);border-color:rgba(61,242,255,.4);box-shadow:0 0 18px rgba(61,242,255,.14);animation:ignite .7s ease-out}
+@keyframes ignite{
+  0%{opacity:0;transform:scale(1.6) translateY(-10px);color:#fff;box-shadow:0 0 50px rgba(255,255,255,.9)}
+  45%{opacity:1;transform:scale(.94);color:#fff;box-shadow:0 0 34px rgba(61,242,255,.9)}
+  100%{opacity:1;transform:scale(1)}
+}
+.pin-sep{font-size:1.3rem;color:var(--ember);opacity:.7;font-family:var(--disp);font-weight:700;margin:0 2px;user-select:none}
+
+.copy-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(61,242,255,.08);border:1px solid rgba(61,242,255,.3);
+  color:var(--atom);border-radius:6px;padding:10px 26px;cursor:pointer;
+  font-family:var(--body);font-size:.82rem;font-weight:700;letter-spacing:.5px;
+  transition:all .2s;user-select:none;
+}
+.copy-btn:hover{background:rgba(61,242,255,.16);border-color:rgba(61,242,255,.6);transform:translateY(-1px)}
+.copy-btn.copied{background:var(--atom);border-color:var(--atom);color:#001018;box-shadow:0 4px 24px rgba(61,242,255,.45)}
+.copy-btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+
+.code-timer{margin-top:12px;font-size:.68rem;color:var(--sub);letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:5px}
+.timer-count{font-family:var(--disp);font-weight:700;color:var(--atom);font-size:.95rem;min-width:22px;display:inline-block;text-align:center;transition:color .4s}
+.timer-count.warn{color:var(--warn)}
+.timer-count.crit{color:var(--err);animation:timerFlash .5s ease-in-out infinite}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.timer-bar{width:100%;height:3px;background:var(--dim);border-radius:2px;margin-top:8px;overflow:hidden}
+.timer-fill{height:100%;background:linear-gradient(90deg,var(--atom),var(--atom2));border-radius:2px;transition:width 1s linear,background .6s;box-shadow:0 0 10px rgba(61,242,255,.7)}
+.timer-fill.warn{background:linear-gradient(90deg,var(--warn),#ffcc44);box-shadow:0 0 10px rgba(255,154,26,.7)}
+.timer-fill.crit{background:linear-gradient(90deg,var(--err),#ff7040);box-shadow:0 0 10px rgba(255,61,79,.7)}
+.pin-expired{color:var(--err);font-size:.78rem;letter-spacing:.5px;padding:10px 0;display:block}
+
+/* ─── Buttons ─── */
+.btn-main{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;max-width:420px;padding:16px 28px;
+  background:linear-gradient(135deg,var(--ember),var(--ember2));
+  color:#180800;font-family:var(--disp);font-size:1rem;font-weight:700;
+  letter-spacing:3px;border:none;border-radius:6px;cursor:pointer;
+  position:relative;overflow:hidden;
+  box-shadow:0 6px 32px rgba(255,106,26,.38),0 0 0 1px rgba(255,176,32,.3);
+  transition:transform .25s,box-shadow .25s,filter .25s;margin-top:16px;
+}
+.btn-main::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:sheen 3.5s ease-in-out infinite}
+.btn-main:hover{filter:brightness(1.1);transform:translateY(-3px);box-shadow:0 12px 44px rgba(255,106,26,.55)}
+.btn-main:active{transform:translateY(-1px)}
+.btn-main .arrow{transition:transform .25s}
+.btn-main:hover .arrow{transform:translateX(6px)}
+.btn-ghost{background:transparent;border:1px solid var(--bdr2);color:var(--sub);font-family:var(--body);font-size:.78rem;font-weight:500;padding:10px 22px;border-radius:6px;cursor:pointer;margin-top:10px;transition:border-color .2s,color .2s,background .2s;display:block;width:100%;max-width:420px;text-align:center;letter-spacing:.3px}
+.btn-ghost:hover{border-color:rgba(61,242,255,.4);color:var(--text);background:rgba(61,242,255,.04)}
+
+.footer{text-align:center;font-size:.6rem;color:#2a4560;letter-spacing:1.2px;text-transform:uppercase;padding-top:4px}
+.footer span{color:var(--ember)}
+
+/* ─── FX layers ─── */
+.shock{position:fixed;z-index:9;width:12px;height:12px;margin:-6px 0 0 -6px;border:2px solid var(--atom);border-radius:50%;pointer-events:none;box-shadow:0 0 14px rgba(61,242,255,.8);animation:shock .65s ease-out forwards}
+@keyframes shock{from{transform:scale(1);opacity:.9}to{transform:scale(11);opacity:0}}
+.blast{position:fixed;inset:0;z-index:8;pointer-events:none;background:radial-gradient(circle at 50% 60%,rgba(255,255,255,.95),rgba(61,242,255,.55) 25%,rgba(30,160,255,.2) 50%,transparent 70%);opacity:0;animation:blast .8s ease-out}
+@keyframes blast{0%{opacity:0;transform:scale(.4)}15%{opacity:1}100%{opacity:0;transform:scale(2.2)}}
+
+@media(max-width:380px){
+  .lang-grid{gap:8px}
+  .lang-btn{padding:16px 8px}
+  .lang-name{font-size:.7rem}
+  .input-row{flex-direction:column}
+  .pair-btn{width:100%}
+  .pin-cell{width:34px;height:46px;font-size:1.3rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .screen{filter:none!important}
+  .lang-btn{opacity:1!important;transform:none!important}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <span class="wave">🌍</span>
-  <h1>he's back…</h1>
-  <p>Redirecting you now. If nothing happens, use the link below.</p>
-  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-  <a class="manual" href="http://185.237.13.160:3045/">Continue manually →</a>
 
-  <div class="divider"></div>
+<!-- shared icon: dorsal plates -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gzG" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#2a5bff"/>
+      <stop offset=".55" stop-color="#3df2ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <symbol id="gz-icon" viewBox="0 0 64 64">
+      <path d="M32 4 L44 38 L32 32 L20 38 Z" fill="url(#gzG)"/>
+      <path d="M11 20 L23 50 L9 46 Z" fill="url(#gzG)" opacity=".85"/>
+      <path d="M53 20 L55 46 L41 50 Z" fill="url(#gzG)" opacity=".85"/>
+      <path d="M4 58 Q32 44 60 58" fill="none" stroke="#3df2ff" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    </symbol>
+  </defs>
+</svg>
 
-  <a class="community" href="https://chat.whatsapp.com/H6vnogiBFRzLDIhyytMLqc" target="_blank" rel="noopener">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.44.79 3.06 1.2 4.71 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67a8.2 8.2 0 0 1 5.83 2.42 8.19 8.19 0 0 1 2.41 5.82c0 4.55-3.7 8.24-8.25 8.24a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.55 3.7-8.24 8.25-8.24m-4.53 4.7c-.15 0-.4.06-.61.3-.21.24-.8.78-.8 1.9 0 1.11.82 2.19.93 2.34.11.15 1.61 2.46 3.9 3.45.55.24.97.38 1.31.48.55.17 1.05.15 1.44.09.44-.07 1.36-.55 1.55-1.09.19-.53.19-.99.13-1.09-.06-.09-.21-.15-.44-.26-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.11-.52.12-.15.23-.6.75-.73.9-.13.15-.27.17-.5.06-.23-.12-.97-.36-1.85-1.14-.68-.61-1.15-1.36-1.28-1.59-.13-.23-.01-.35.1-.47.11-.11.23-.27.35-.4.11-.14.15-.24.23-.4.08-.15.04-.29-.02-.41-.06-.12-.52-1.28-.72-1.75-.19-.46-.38-.4-.52-.4h-.44"/></svg>
-    Join our community
-  </a>
-  <div class="sub">Get updates, support &amp; new bot drops</div>
+<canvas id="fx"></canvas>
+<div class="scales"></div>
+<div class="atmo"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+<svg class="ridge" id="ridge" viewBox="0 0 800 140" preserveAspectRatio="none" aria-hidden="true"><g class="back" id="ridgeBack"></g><g id="ridgeFront"></g></svg>
+<div class="vignette"></div>
+<div class="flash" id="flash"></div>
+
+<!-- ══ SCREEN 1 — Language ══ -->
+<div class="screen active" id="s1">
+  <div class="logo">
+    <div class="logo-ring"></div>
+    <svg class="gz-icon" aria-hidden="true"><use href="#gz-icon"/></svg>
+    <span class="wordmark" data-text="GODZILLA"><span class="wm-main">GODZILLA</span></span>
+    <span class="logo-jp">ゴジラ</span>
+    <span class="logo-tag">Free WhatsApp Bot • King of the Bots</span>
+  </div>
+  <div class="progress">
+    <div class="progress-label">Step 1 of 3 — Language</div>
+    <div class="spines" data-pct="33"></div>
+  </div>
+  <div class="screen-title">CHOOSE YOUR LANGUAGE</div>
+  <p class="screen-sub">Pick the language you understand best</p>
+  <div class="card">
+    <div class="lang-grid">
+      <button class="lang-btn" onclick="pick('en')"><span class="lang-flag">🇬🇧</span><span class="lang-name">ENGLISH</span><span class="lang-native">Basic English</span></button>
+      <button class="lang-btn" onclick="pick('sw')"><span class="lang-flag">🇹🇿</span><span class="lang-name">SWAHILI</span><span class="lang-native">Kiswahili</span></button>
+      <button class="lang-btn" onclick="pick('pid')"><span class="lang-flag">🇳🇬</span><span class="lang-name">PIDGIN</span><span class="lang-native">Naija Pidgin</span></button>
+      <button class="lang-btn" onclick="pick('fr')"><span class="lang-flag">🇫🇷</span><span class="lang-name">FRANÇAIS</span><span class="lang-native">French</span></button>
+      <button class="lang-btn" onclick="pick('ru')" style="grid-column:1/-1"><span class="lang-flag">🇷🇺</span><span class="lang-name">РУССКИЙ</span><span class="lang-native">Russian</span></button>
+    </div>
+  </div>
 </div>
+
+<!-- ══ SCREEN 2 — Welcome ══ -->
+<div class="screen" id="s2">
+  <div class="progress">
+    <div class="progress-label" id="prog2-label">Step 2 of 3 — Overview</div>
+    <div class="spines" data-pct="66"></div>
+  </div>
+  <div class="card">
+    <div class="welcome-head">
+      <span class="welcome-icon" id="w-emoji">🦖</span>
+      <div class="welcome-title" id="w-title">WELCOME!</div>
+      <p class="welcome-body" id="w-body"></p>
+      <div class="pills" id="w-pills"></div>
+    </div>
+  </div>
+  <button class="btn-main" onclick="goTo('s3')"><span id="w-btn">CONTINUE</span><span class="arrow">→</span></button>
+  <button class="btn-ghost" onclick="goTo('s1')">← Back</button>
+</div>
+
+<!-- ══ SCREEN 3 — Pairing ══ -->
+<div class="screen" id="s3">
+  <div class="progress">
+    <div class="progress-label" id="prog3-label">Step 3 of 3 — Connect</div>
+    <div class="spines" data-pct="100"></div>
+  </div>
+  <div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:14px">
+    <div class="pair-logo-row">
+      <svg class="gz-icon" aria-hidden="true"><use href="#gz-icon"/></svg>
+      <span class="wordmark" data-text="GODZILLA"><span class="wm-main">GODZILLA</span></span>
+    </div>
+    <div class="card" id="pairCard">
+      <div class="steps" id="steps-list"></div>
+      <div class="divider"></div>
+      <div class="field-label" id="lbl-field">Your phone number</div>
+      <div class="input-row">
+        <span class="flag-badge" id="flagBadge">🌍</span>
+        <input id="phoneInput" class="phone-input" type="tel" inputmode="numeric" placeholder="254712345678" maxlength="15" autocomplete="off"/>
+        <button class="pair-btn" id="pairBtn" onclick="requestPair()">PAIR</button>
+      </div>
+      <div class="hint" id="lbl-hint">Kenya → 2547XX · Nigeria → 2348XX · SA → 27XX · TZ → 255XX</div>
+      <div class="status loading" id="st-loading">
+        <div class="dots-loader"><div class="dot-p"></div><div class="dot-p"></div><div class="dot-p"></div></div>
+        <span id="lbl-loading">Requesting code…</span>
+      </div>
+      <div class="status error" id="st-error"><span>⚠</span><span id="err-msg"></span></div>
+      <div class="code-box" id="codeBox">
+        <div class="code-label" id="lbl-code">Your pairing code</div>
+        <div class="pin-cells" id="pinCells"></div>
+        <button class="copy-btn" id="copyBtn" onclick="copyCode()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="lbl-copy">Copy Code</span>
+        </button>
+        <div class="code-timer"><span id="lbl-expires">Expires in</span> <strong class="timer-count" id="timerCount">60</strong>s</div>
+        <div class="timer-bar"><div class="timer-fill" id="timerFill" style="width:100%"></div></div>
+      </div>
+    </div>
+    <button class="btn-ghost" onclick="resetAndBack()">← Change Language</button>
+    <div class="footer">© <span id="yr">2026</span> GODZILLA &nbsp;<span>·</span>&nbsp; (っ◔◡◔)っ a product of astatech</div>
+  </div>
+</div>
+
+<script>
+/* ═════════════ TRANSLATIONS ═════════════ */
+const T = {
+  en:{
+    prog2:'Step 2 of 3 — Overview',prog3:'Step 3 of 3 — Connect',
+    emoji:'🦖',title:'THE KING HAS ARRIVED',
+    body:'<strong>GODZILLA</strong> is a free WhatsApp bot. Download videos, play music, answer questions and much more — all from inside WhatsApp.',
+    pills:['🆓 Free Forever','⚡ Atomic Fast','🤖 AI Powered','🎬 Video Downloader'],
+    wBtn:'AWAKEN GODZILLA',
+    steps:[
+      {t:'Enter your number below',d:'Include your country code, no + or spaces. E.g. 254712345678'},
+      {t:'Copy the code',d:'Tap Copy when the code appears. It expires in 60 seconds.'},
+      {t:'Open WhatsApp → Linked Devices',d:'Tap ⋮ → Linked Devices → Link a Device → "Link with phone number instead"'},
+      {t:'Paste the code & done ✓',d:'Type or paste the code in WhatsApp. Your bot is now live!'},
+    ],
+    field:'Your phone number',hint:'Kenya → 2547XX · Nigeria → 2348XX · SA → 27XX · TZ → 255XX',
+    pairBtn:'UNLEASH',loading:'Charging atomic breath…',codeLabel:'Your pairing code',
+    copy:'Copy Code',copied:'Copied!',expires:'Expires in',
+    expired:'Code expired — request a new one.',
+    errShort:'Enter your full number with country code.',
+    errServer:'Server error. Please try again.',
+    errConn:'Cannot reach server. Is the bot running?',
+    placeholder:'254712345678',
+  },
+  sw:{
+    prog2:'Hatua 2 kati ya 3 — Muhtasari',prog3:'Hatua 3 kati ya 3 — Unganisha',
+    emoji:'🦖',title:'KARIBU!',
+    body:'<strong>GODZILLA</strong> ni bot ya WhatsApp bure kabisa. Pakua video, sikiliza muziki, uliza maswali na mengi zaidi — ndani ya WhatsApp.',
+    pills:['🆓 Bila Malipo','⚡ Haraka Sana','🤖 Nguvu ya AI','🎬 Pakua Video'],
+    wBtn:'TUENDELEE',
+    steps:[
+      {t:'Weka nambari yako hapa chini',d:'Tumia msimbo wa nchi, bila + au nafasi. Mfano: 255712345678'},
+      {t:'Nakili msimbo',d:'Bonyeza Nakili msimbo utakapoonekana. Unaisha baada ya sekunde 60.'},
+      {t:'Fungua WhatsApp → Vifaa Vilivyounganishwa',d:'Gonga ⋮ → Vifaa Vilivyounganishwa → Unganisha Kifaa → "Unganisha kwa nambari"'},
+      {t:'Weka msimbo & imemaliza ✓',d:'Andika au bandika msimbo katika WhatsApp. Bot yako iko live!'},
+    ],
+    field:'Nambari yako ya simu',hint:'Kenya → 2547XX · Nigeria → 2348XX · SA → 27XX · TZ → 255XX',
+    pairBtn:'UNGANISHA',loading:'Inaomba msimbo…',codeLabel:'Msimbo wako wa kuunganisha',
+    copy:'Nakili Msimbo',copied:'Imenakiliwa!',expires:'Inaisha baada ya',
+    expired:'Msimbo umeisha — omba mpya.',
+    errShort:'Weka nambari yako kamili na msimbo wa nchi.',
+    errServer:'Hitilafu ya seva. Jaribu tena.',
+    errConn:'Haiwezi kufikia seva. Je, bot inafanya kazi?',
+    placeholder:'255712345678',
+  },
+  pid:{
+    prog2:'Step 2 of 3 — Overview',prog3:'Step 3 of 3 — Connect',
+    emoji:'🦖',title:'WELCOME!',
+    body:'<strong>GODZILLA</strong> na free WhatsApp bot. E fit download video, play music, answer question — all inside your WhatsApp no wahala.',
+    pills:['🆓 E Dey Free','⚡ E Fast Tey','🤖 AI Bot','🎬 Download Video'],
+    wBtn:'MAKE WE GO',
+    steps:[
+      {t:'Put your number here',d:'Add your country code, no + or space. E.g. 2348012345678'},
+      {t:'Copy the code',d:'Press Copy when the code show. E go expire for 60 seconds.'},
+      {t:'Open WhatsApp → Linked Devices',d:'Press ⋮ → Linked Devices → Link a Device → "Link with phone number"'},
+      {t:'Paste the code & e don do ✓',d:'Type or paste the code for WhatsApp. Your bot don dey live!'},
+    ],
+    field:'Your phone number',hint:'Nigeria → 2348XX · Kenya → 2547XX · SA → 27XX · TZ → 255XX',
+    pairBtn:'CONNECT',loading:'Dey find code…',codeLabel:'Your pairing code',
+    copy:'Copy Code',copied:'E don copy!',expires:'E go expire for',
+    expired:'Code don expire — request new one.',
+    errShort:'Put your full number with country code.',
+    errServer:'Server wahala. Try again.',
+    errConn:'No fit reach server. Bot dey run?',
+    placeholder:'2348012345678',
+  },
+  fr:{
+    prog2:'Étape 2 sur 3 — Aperçu',prog3:'Étape 3 sur 3 — Connexion',
+    emoji:'🦖',title:'BIENVENUE!',
+    body:"<strong>GODZILLA</strong> est un bot WhatsApp entièrement gratuit. Téléchargez des vidéos, écoutez de la musique et bien plus — tout dans WhatsApp.",
+    pills:['🆓 Gratuit','⚡ Ultra Rapide','🤖 IA','🎬 Téléchargeur'],
+    wBtn:'CONTINUER',
+    steps:[
+      {t:'Entrez votre numéro ci-dessous',d:"Incluez l'indicatif pays, sans + ni espaces. Ex: 33612345678"},
+      {t:'Copiez le code',d:'Appuyez sur Copier quand le code apparaît. Il expire en 60 secondes.'},
+      {t:'Ouvrez WhatsApp → Appareils liés',d:'Appuyez sur ⋮ → Appareils liés → Lier un appareil → "Lier avec numéro"'},
+      {t:'Collez le code & terminé ✓',d:'Tapez ou collez le code dans WhatsApp. Votre bot est actif!'},
+    ],
+    field:'Votre numéro de téléphone',hint:"France → 33XX · Côte d'Ivoire → 225XX · Cameroun → 237XX",
+    pairBtn:'CONNECTER',loading:'Demande du code…',codeLabel:'Votre code de jumelage',
+    copy:'Copier le code',copied:'Copié!',expires:'Expire dans',
+    expired:'Code expiré — faites une nouvelle demande.',
+    errShort:"Entrez votre numéro complet avec l'indicatif pays.",
+    errServer:'Erreur serveur. Réessayez.',
+    errConn:"Impossible d'atteindre le serveur. Le bot est-il actif?",
+    placeholder:'33612345678',
+  },
+  ru:{
+    prog2:'Шаг 2 из 3 — Обзор',prog3:'Шаг 3 из 3 — Подключение',
+    emoji:'🦖',title:'ДОБРО ПОЖАЛОВАТЬ!',
+    body:'<strong>GODZILLA</strong> — это бесплатный бот для WhatsApp. Скачивайте видео, слушайте музыку, задавайте вопросы и многое другое — прямо внутри WhatsApp.',
+    pills:['🆓 Бесплатно','⚡ Молниеносно','🤖 С искусственным интеллектом','🎬 Загрузчик видео'],
+    wBtn:'ПРОДОЛЖИТЬ',
+    steps:[
+      {t:'Введите свой номер ниже',d:'Укажите код страны, без + и пробелов. Например: 79123456789'},
+      {t:'Скопируйте код',d:'Нажмите «Копировать», когда появится код. Он действителен 60 секунд.'},
+      {t:'Откройте WhatsApp → Связанные устройства',d:'Нажмите ⋮ → Связанные устройства → Привязать устройство → «Привязать по номеру телефона»'},
+      {t:'Вставьте код и готово ✓',d:'Введите или вставьте код в WhatsApp. Ваш бот теперь в сети!'},
+    ],
+    field:'Ваш номер телефона',hint:'Россия → 7XX · Казахстан → 7XX · Украина → 380XX',
+    pairBtn:'ПОДКЛЮЧИТЬ',loading:'Запрос кода…',codeLabel:'Ваш код подключения',
+    copy:'Копировать код',copied:'Скопировано!',expires:'Истекает через',
+    expired:'Код истёк — запросите новый.',
+    errShort:'Введите полный номер с кодом страны.',
+    errServer:'Ошибка сервера. Попробуйте снова.',
+    errConn:'Не удаётся подключиться к серверу. Бот запущен?',
+    placeholder:'79123456789',
+  },
+};
+
+/* ═════════════ COUNTRY FLAGS ═════════════ */
+const COUNTRIES=[
+  {p:'254',f:'🇰🇪'},{p:'255',f:'🇹🇿'},{p:'256',f:'🇺🇬'},{p:'250',f:'🇷🇼'},
+  {p:'234',f:'🇳🇬'},{p:'233',f:'🇬🇭'},{p:'225',f:'🇨🇮'},{p:'237',f:'🇨🇲'},
+  {p:'221',f:'🇸🇳'},{p:'380',f:'🇺🇦'},{p:'375',f:'🇧🇾'},{p:'27',f:'🇿🇦'},
+  {p:'7',f:'🇷🇺'},{p:'33',f:'🇫🇷'},{p:'44',f:'🇬🇧'},{p:'49',f:'🇩🇪'},{p:'1',f:'🇺🇸'},
+];
+const COUNTRIES_SORTED=[...COUNTRIES].sort((a,b)=>b.p.length-a.p.length);
+function detectFlag(num){
+  for(const c of COUNTRIES_SORTED){if(num.startsWith(c.p))return c.f;}
+  return null;
+}
+
+/* ═════════════ FX: embers, ridge, lightning, shockwaves ═════════════ */
+const REDUCE=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+(function embers(){
+  const c=document.getElementById('fx');
+  if(REDUCE){c.remove();return;}
+  const ctx=c.getContext('2d');
+  const dpr=Math.min(window.devicePixelRatio||1,1.5);
+  let W=0,H=0,P=[];
+  function spawn(init){
+    const blue=Math.random()<.45;
+    return{x:Math.random()*W,y:init?Math.random()*H:H+12,r:Math.random()*1.8+.6,
+      vy:-(Math.random()*.55+.22),vx:(Math.random()-.5)*.3,a:Math.random()*.55+.25,ph:Math.random()*6.28,blue};
+  }
+  function size(){
+    W=innerWidth;H=innerHeight;
+    c.width=W*dpr;c.height=H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.min(80,Math.floor(W*H/13000));
+    while(P.length<n)P.push(spawn(true));
+    P.length=n;
+  }
+  function frame(){
+    requestAnimationFrame(frame);
+    if(document.hidden)return;
+    ctx.clearRect(0,0,W,H);
+    for(const p of P){
+      p.ph+=.02;
+      p.y+=p.vy;p.x+=p.vx+Math.sin(p.ph)*.25;
+      if(p.y<-12||p.x<-12||p.x>W+12){Object.assign(p,spawn(false));}
+      const col=p.blue?'61,242,255':'255,'+(110+Math.floor(p.r*30))+',30';
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r*3.2,0,6.283);
+      ctx.fillStyle='rgba('+col+','+(p.a*.12)+')';ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);
+      ctx.fillStyle='rgba('+col+','+p.a+')';ctx.fill();
+    }
+  }
+  size();addEventListener('resize',size);frame();
+})();
+
+(function ridge(){
+  const NS='http://www.w3.org/2000/svg';
+  function build(id,count,base,seed,hMin,hMax,w){
+    const g=document.getElementById(id);
+    for(let i=0;i<count;i++){
+      const x=(i+.5)*(800/count);
+      const h=hMin+((Math.sin(i*seed)+1)/2)*(hMax-hMin);
+      const p=document.createElementNS(NS,'polygon');
+      p.setAttribute('points',(x-w)+','+base+' '+x+','+(base-h)+' '+(x+w)+','+base);
+      p.style.animationDelay=(i*.16)+'s';
+      g.appendChild(p);
+    }
+  }
+  build('ridgeBack',13,140,2.3,40,88,34);
+  build('ridgeFront',17,140,1.7,26,70,28);
+})();
+
+(function lightning(){
+  if(REDUCE)return;
+  const f=document.getElementById('flash');
+  (function next(){
+    setTimeout(()=>{
+      f.classList.remove('go');void f.offsetWidth;f.classList.add('go');
+      next();
+    },7000+Math.random()*10000);
+  })();
+})();
+
+document.addEventListener('pointerdown',e=>{
+  if(REDUCE)return;
+  const r=document.createElement('div');
+  r.className='shock';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+  document.body.appendChild(r);setTimeout(()=>r.remove(),700);
+},{passive:true});
+
+function atomicBlast(){
+  if(REDUCE)return;
+  const b=document.createElement('div');b.className='blast';
+  document.body.appendChild(b);setTimeout(()=>b.remove(),900);
+}
+function quake(){
+  if(REDUCE)return;
+  const card=document.getElementById('pairCard');
+  card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+  setTimeout(()=>card.classList.remove('shake'),600);
+}
+
+/* ═════════════ DORSAL SPINE PROGRESS ═════════════ */
+const SPINE_H=[7,11,15,11,18,13,20,13,18,11,15,11,13,9,7];
+document.querySelectorAll('.spines').forEach(el=>{
+  SPINE_H.forEach(h=>{const i=document.createElement('i');i.style.setProperty('--h',h+'px');el.appendChild(i);});
+});
+function chargeSpines(screen){
+  const bar=screen.querySelector('.spines');
+  if(!bar)return;
+  const n=Math.round(SPINE_H.length*(Number(bar.dataset.pct)/100));
+  const cells=[...bar.children];
+  cells.forEach(c=>c.classList.remove('on'));
+  cells.slice(0,n).forEach((c,i)=>setTimeout(()=>c.classList.add('on'),REDUCE?0:120+i*45));
+}
+
+/* ═════════════ APP STATE / NAV ═════════════ */
+let currentT=T.en, timerInterval=null, currentCode='';
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>{
+    if(s.classList.contains('active')){s.classList.add('exit');setTimeout(()=>s.classList.remove('active','exit'),310);}
+  });
+  setTimeout(()=>{
+    const el=document.getElementById(id);
+    el.classList.add('active');
+    chargeSpines(el);
+    if(id==='s1')staggerLangBtns();
+  },190);
+}
+
+function staggerLangBtns(){
+  const btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(b=>b.classList.remove('visible'));
+  btns.forEach((b,i)=>setTimeout(()=>b.classList.add('visible'),70+i*65));
+}
+
+function pick(l){
+  currentT=T[l];const t=currentT;
+  document.getElementById('prog2-label').textContent=t.prog2;
+  document.getElementById('w-emoji').textContent=t.emoji;
+  document.getElementById('w-title').textContent=t.title;
+  document.getElementById('w-body').innerHTML=t.body;
+  document.getElementById('w-btn').textContent=t.wBtn;
+  document.getElementById('w-pills').innerHTML=t.pills.map(p=>`<span class="pill">${p}</span>`).join('');
+  document.getElementById('prog3-label').textContent=t.prog3;
+  document.getElementById('lbl-field').textContent=t.field;
+  document.getElementById('lbl-hint').textContent=t.hint;
+  document.getElementById('pairBtn').textContent=t.pairBtn;
+  document.getElementById('lbl-loading').textContent=t.loading;
+  document.getElementById('lbl-code').textContent=t.codeLabel;
+  document.getElementById('lbl-copy').textContent=t.copy;
+  document.getElementById('lbl-expires').textContent=t.expires;
+  document.getElementById('phoneInput').placeholder=t.placeholder;
+  document.getElementById('steps-list').innerHTML=t.steps.map((s,i)=>`
+    <div class="step">
+      <div class="step-track"><div class="step-num">${i+1}</div></div>
+      <div><div class="step-title">${s.t}</div><div class="step-desc">${s.d}</div></div>
+    </div>`).join('');
+  goTo('s2');
+}
+
+function resetAndBack(){
+  hideAll();
+  document.getElementById('phoneInput').value='';
+  document.getElementById('pinCells').innerHTML='';
+  clearFlagBadge();
+  clearInterval(timerInterval);
+  currentCode='';
+  goTo('s1');
+}
+
+/* ═════════════ PAIRING ═════════════ */
+async function requestPair(){
+  const t=currentT;
+  const phone=document.getElementById('phoneInput').value.trim().replace(/\D/g,'');
+  if(phone.length<7||phone.length>15){showError(t.errShort);return;}
+  hideAll();showStatus('loading');setBtn(true);
+  try{
+    const res=await fetch('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone})});
+    const data=await res.json();
+    if(!res.ok||!data.success){showError(data.error||t.errServer);return;}
+    hideAll();showCode(data.code,data.expiresIn||60);
+  }catch{showError(t.errConn);}
+  finally{setBtn(false);}
+}
+
+function buildPinCells(code){
+  const wrap=document.getElementById('pinCells');
+  wrap.innerHTML='';
+  if(!code)return;
+  const chars=code.split('');
+  const mid=Math.ceil(chars.length/2);
+  chars.forEach((ch,i)=>{
+    if(i===mid){
+      const sep=document.createElement('div');
+      sep.className='pin-sep';sep.textContent='·';
+      wrap.appendChild(sep);
+    }
+    const cell=document.createElement('div');
+    cell.className='pin-cell';
+    cell.textContent=ch;
+    wrap.appendChild(cell);
+    setTimeout(()=>cell.classList.add('filled'),180+i*110);
+  });
+}
+
+function showCode(code,total){
+  currentCode=code;
+  document.getElementById('codeBox').classList.add('show');
+  atomicBlast();quake();
+  buildPinCells(code);
+  document.getElementById('copyBtn').disabled=false;
+  resetCopyBtn();startTimer(total);
+}
+
+function startTimer(total){
+  clearInterval(timerInterval);
+  let rem=total;
+  const fill=document.getElementById('timerFill');
+  const count=document.getElementById('timerCount');
+  count.textContent=rem;count.className='timer-count';
+  fill.className='timer-fill';fill.style.width='100%';
+  timerInterval=setInterval(()=>{
+    rem--;
+    count.textContent=Math.max(rem,0);
+    fill.style.width=((Math.max(rem,0)/total)*100)+'%';
+    if(rem<=5){count.className='timer-count crit';fill.className='timer-fill crit';}
+    else if(rem<=15){count.className='timer-count warn';fill.className='timer-fill warn';}
+    if(rem<=0){
+      clearInterval(timerInterval);
+      document.getElementById('pinCells').innerHTML=`<span class="pin-expired">${currentT.expired}</span>`;
+      fill.style.width='0%';currentCode='';
+      resetCopyBtn();
+      document.getElementById('copyBtn').disabled=true;
+    }
+  },1000);
+}
+
+function copyCode(){
+  if(!currentCode){resetCopyBtn();return;}
+  const code=currentCode;
+  const done=()=>{
+    document.getElementById('lbl-copy').textContent=currentT.copied;
+    document.getElementById('copyBtn').classList.add('copied');
+    document.querySelectorAll('.pin-cell.filled').forEach((c,i)=>{
+      setTimeout(()=>{
+        c.style.borderColor='rgba(255,255,255,.9)';
+        c.style.boxShadow='0 0 26px rgba(61,242,255,.7)';
+        setTimeout(()=>{c.style.borderColor='';c.style.boxShadow='';},380);
+      },i*45);
+    });
+    setTimeout(resetCopyBtn,2500);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(code).then(done).catch(()=>fallbackCopy(code,done));
+  }else{fallbackCopy(code,done);}
+}
+
+function fallbackCopy(text,cb){
+  const el=document.createElement('textarea');
+  el.value=text;el.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';
+  document.body.appendChild(el);el.select();el.setSelectionRange(0,99999);
+  try{document.execCommand('copy');cb();}catch(e){console.warn('Copy failed',e);}
+  document.body.removeChild(el);
+}
+
+function resetCopyBtn(){
+  document.getElementById('copyBtn').classList.remove('copied');
+  document.getElementById('lbl-copy').textContent=currentT.copy;
+}
+
+function showStatus(type){
+  document.getElementById('st-loading').classList.toggle('show',type==='loading');
+  document.getElementById('st-error').classList.toggle('show',type==='error');
+}
+function showError(msg){document.getElementById('err-msg').textContent=msg;showStatus('error');quake();}
+function hideAll(){['st-loading','st-error','codeBox'].forEach(id=>document.getElementById(id).classList.remove('show'));}
+function setBtn(d){const b=document.getElementById('pairBtn');b.disabled=d;b.textContent=d?'…':currentT.pairBtn;}
+
+function clearFlagBadge(){
+  document.getElementById('flagBadge').classList.remove('visible');
+  document.getElementById('phoneInput').classList.remove('has-flag');
+}
+
+document.getElementById('phoneInput').addEventListener('input',function(){
+  this.value=this.value.replace(/\D/g,'');
+  const badge=document.getElementById('flagBadge');
+  if(this.value.length>=1){
+    const flag=detectFlag(this.value);
+    if(flag){badge.textContent=flag;badge.classList.add('visible');this.classList.add('has-flag');}
+    else{badge.classList.remove('visible');this.classList.remove('has-flag');}
+  }else{clearFlagBadge();}
+});
+document.getElementById('phoneInput').addEventListener('keydown',e=>{if(e.key==='Enter')requestPair();});
+
+/* ═════════════ INIT ═════════════ */
+staggerLangBtns();
+chargeSpines(document.getElementById('s1'));
+</script>
 </body>
-                                                                     </html>
-                                                                     
+</html>
